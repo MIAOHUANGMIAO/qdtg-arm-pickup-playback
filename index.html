@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>正式提交主控：抓取仿真回放</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#111b28;color:#edf3fb;font:16px/1.6 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1500px;margin:auto;padding:20px}h1{font-size:22px;line-height:1.4}h2{font-size:17px;margin:10px 0}.views{display:grid;grid-template-columns:minmax(0,3fr) minmax(240px,1fr);gap:16px}video{display:block;width:100%;background:#05080d;border-radius:10px}button{min-height:44px;min-width:84px;padding:8px 18px;background:#256a9e;color:white;border:0;border-radius:8px;font:inherit;cursor:pointer}.controls{display:flex;align-items:center;gap:12px;margin-top:20px;flex-wrap:wrap}input{flex:1;min-width:140px;height:44px;accent-color:#70c4ff}#clock{font-variant-numeric:tabular-nums;white-space:nowrap}small{display:block;color:#a9b9ca;margin-top:16px}#status{color:#ffc77b}a{color:#91d4ff}details{margin-top:12px}@media(max-width:760px){main{padding:14px}.views{grid-template-columns:1fr;gap:12px}h1{font-size:19px}.controls{gap:8px}#clock{font-size:14px}}
+</style>
+</head>
+<body><main>
+<h1>正式提交主控：首次识别与抓取验证</h1>
+<div class="views">
+<section><h2>机械臂全景</h2><video id="panorama" muted playsinline webkit-playsinline preload="metadata" src="panorama.mp4"></video></section>
+<section><h2>相机处理图</h2><video id="processed" muted playsinline webkit-playsinline preload="metadata" src="camera-processed.mp4"></video></section>
+</div>
+<div class="controls"><button id="play" type="button">播放</button><input id="seek" aria-label="回放进度" type="range" min="0" max="26" step="0.01" value="0"><span id="clock">0.13 s</span></div>
+<p id="status" role="status" aria-live="polite"></p>
+<small>两画面按同一模拟时间回放。本轮夹起物料约100毫米，约26秒完成首次撤回。物料为30毫米刚体代理，本轮只验证此摆放位置。</small>
+<details><summary>单独打开视频</summary><a href="panorama.mp4">机械臂全景视频</a> · <a href="camera-processed.mp4">相机处理视频</a></details>
+</main>
+<script>
+const full=document.querySelector('#panorama');
+const cam=document.querySelector('#processed');
+const play=document.querySelector('#play');
+const seek=document.querySelector('#seek');
+const clock=document.querySelector('#clock');
+const status=document.querySelector('#status');
+const start=0.1338;
+function updateClock(){seek.value=full.currentTime;clock.textContent=(start+full.currentTime).toFixed(2)+' s';}
+function sync(){if(cam.readyState>0)cam.currentTime=full.currentTime;updateClock();}
+full.addEventListener('loadedmetadata',()=>{seek.max=full.duration;updateClock();});
+cam.addEventListener('loadedmetadata',sync);
+full.addEventListener('timeupdate',()=>{updateClock();if(cam.readyState>0&&Math.abs(cam.currentTime-full.currentTime)>.12)cam.currentTime=full.currentTime;});
+full.addEventListener('ended',()=>{cam.pause();play.textContent='重新播放';});
+seek.addEventListener('input',()=>{full.currentTime=Number(seek.value);sync();});
+play.addEventListener('click',async()=>{
+  status.textContent='';
+  if(!full.paused){full.pause();cam.pause();play.textContent='播放';return;}
+  if(full.ended)full.currentTime=0;
+  sync();
+  try{await Promise.all([full.play(),cam.play()]);play.textContent='暂停';}
+  catch(error){full.pause();cam.pause();play.textContent='播放';status.textContent='未能播放，请刷新后重试，或在下方单独打开视频。';}
+});
+for(const video of [full,cam])video.addEventListener('error',()=>{status.textContent='视频加载失败，请刷新页面或单独打开视频。';});
+</script>
+</body></html>
