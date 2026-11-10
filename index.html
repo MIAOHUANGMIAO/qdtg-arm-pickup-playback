@@ -1,50 +1,36 @@
 <!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
+<html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="robots" content="noindex,nofollow">
-<title>正式提交主控：抓取仿真回放</title>
+<meta name="robots" content="noindex,nofollow"><title>主控修正版：低位放置与红料回夹</title>
 <style>
-:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#111b28;color:#edf3fb;font:16px/1.6 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1500px;margin:auto;padding:20px}h1{font-size:22px;line-height:1.4}h2{font-size:17px;margin:10px 0}.views{display:grid;grid-template-columns:minmax(0,3fr) minmax(240px,1fr);gap:16px}video{display:block;width:100%;background:#05080d;border-radius:10px}button{min-height:44px;min-width:84px;padding:8px 18px;background:#256a9e;color:white;border:0;border-radius:8px;font:inherit;cursor:pointer}.controls{display:flex;align-items:center;gap:12px;margin-top:20px;flex-wrap:wrap}input{flex:1;min-width:140px;height:44px;accent-color:#70c4ff}#clock{font-variant-numeric:tabular-nums;white-space:nowrap}small{display:block;color:#a9b9ca;margin-top:16px}#status{color:#ffc77b}a{color:#91d4ff}details{margin-top:12px}@media(max-width:760px){main{padding:14px}.views{grid-template-columns:1fr;gap:12px}h1{font-size:19px}.controls{gap:8px}#clock{font-size:14px}}
-</style>
-</head>
-<body><main>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#111b28;color:#edf3fb;font:16px/1.6 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1500px;margin:auto;padding:20px}h1{font-size:22px;line-height:1.4}h2{font-size:17px;margin:10px 0}.primary-views{display:grid;grid-template-columns:minmax(0,3fr) minmax(240px,1fr);gap:16px}.near-views{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.near-views.single{grid-template-columns:minmax(0,960px);justify-content:center}.view-card[hidden],#gripper-section[hidden]{display:none}video{display:block;width:100%;background:#05080d;border-radius:10px}button,select{min-height:44px;padding:8px 16px;background:#256a9e;color:white;border:0;border-radius:8px;font:inherit;cursor:pointer}button[aria-pressed="true"]{background:#80d8cc;color:#10212b}.controls{position:sticky;top:0;z-index:3;background:#111b28ed;display:flex;align-items:center;gap:12px;padding:12px 0;flex-wrap:wrap;border-bottom:1px solid #34465a}.angles{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.angles button{min-width:72px}input{flex:1;min-width:140px;height:44px;accent-color:#70c4ff}#clock{font-variant-numeric:tabular-nums;white-space:nowrap}small{display:block;color:#a9b9ca;margin-top:16px}#status{color:#ffc77b}a{color:#91d4ff}details{margin-top:12px}.hint{margin:8px 0;color:#a9b9ca;font-size:14px}@media(max-width:760px){main{padding:14px}.primary-views,.near-views{grid-template-columns:1fr;gap:12px}h1{font-size:19px}.controls{gap:8px}#clock{font-size:14px}.angles{gap:6px}.angles button{padding:6px 12px}}
+</style></head><body><main>
 <h1>主控修正版：低位放置与红料回夹</h1>
-<div class="views">
-<section><h2>机械臂全景</h2><video id="panorama" muted playsinline webkit-playsinline preload="metadata" src="panorama.mp4?run=20261110-185841-formal-reacquire-fix"></video></section>
-<section><h2>相机处理图</h2><video id="processed" muted playsinline webkit-playsinline preload="metadata" src="camera-processed.mp4?run=20261110-185841-formal-reacquire-fix"></video></section>
-</div>
-<div class="controls"><button id="play" type="button">播放</button><select id="rate" aria-label="播放速度" style="min-height:44px;font:inherit"><option value="1">1倍</option><option value="2">2倍</option><option value="4">4倍</option></select><input id="seek" aria-label="回放进度" type="range" min="0" max="26" step="0.01" value="0"><span id="clock">0.13 s</span></div>
+<div class="controls"><button id="play" type="button">播放</button><select id="rate" aria-label="播放速度"><option value="0.5">0.5倍</option><option value="1" selected>1倍</option><option value="2">2倍</option><option value="4">4倍</option></select><input id="seek" aria-label="回放进度" type="range" min="0" max="1" step="0.01" value="0"><span id="clock">0.00 s</span></div>
 <p id="status" role="status" aria-live="polite"></p>
-<small>最长240秒；本轮194.47秒，红料回夹抬升完成，自动结束。日志已保存。物料采用简化沙包模型，保留压扁、鼓包和延迟恢复。</small>
-<details><summary>单独打开视频</summary><a href="panorama.mp4?run=20261110-185841-formal-reacquire-fix">机械臂全景视频</a> · <a href="camera-processed.mp4?run=20261110-185841-formal-reacquire-fix">相机处理视频</a></details>
-</main>
-<script>
+<section id="gripper-section"><div class="angles" role="group" aria-label="夹爪近景视角"><button type="button" data-angle="side">侧视</button><button type="button" data-angle="top">俯视</button><button type="button" data-angle="front">正视</button><button type="button" data-angle="all">三视图</button></div><p class="hint">近景随夹爪移动。俯视保持向下，侧视与正视随机械臂朝向转动；均为仿真观察视角。</p><div class="near-views" id="near-views"><section class="view-card" data-group="gripper" data-view="side"><h2>夹爪侧视</h2><video id="side" data-group="gripper" muted playsinline webkit-playsinline preload="metadata" src="gripper-side.mp4?run=20261110-192004-formal-reacquire-fix"></video></section><section class="view-card" data-group="gripper" data-view="top"><h2>夹爪俯视</h2><video id="top" data-group="gripper" muted playsinline webkit-playsinline preload="metadata" src="gripper-top.mp4?run=20261110-192004-formal-reacquire-fix"></video></section><section class="view-card" data-group="gripper" data-view="front"><h2>夹爪正视</h2><video id="front" data-group="gripper" muted playsinline webkit-playsinline preload="metadata" src="gripper-front.mp4?run=20261110-192004-formal-reacquire-fix"></video></section></div></section>
+<div class="primary-views"><section class="view-card" data-group="primary" data-view="panorama"><h2>机械臂全景</h2><video id="panorama" data-group="primary" muted playsinline webkit-playsinline preload="metadata" src="panorama.mp4?run=20261110-192004-formal-reacquire-fix"></video></section><section class="view-card" data-group="primary" data-view="processed"><h2>相机处理图</h2><video id="processed" data-group="primary" muted playsinline webkit-playsinline preload="metadata" src="camera-processed.mp4?run=20261110-192004-formal-reacquire-fix"></video></section></div>
+<small>最长240秒；本轮240.00秒，达到最长运行时间。日志已保存。物料采用简化沙包模型，保留压扁、鼓包和延迟恢复。</small><details><summary>单独打开视频</summary><a href="panorama.mp4?run=20261110-192004-formal-reacquire-fix">机械臂全景</a> · <a href="camera-processed.mp4?run=20261110-192004-formal-reacquire-fix">相机处理图</a> · <a href="gripper-side.mp4?run=20261110-192004-formal-reacquire-fix">夹爪侧视</a> · <a href="gripper-top.mp4?run=20261110-192004-formal-reacquire-fix">夹爪俯视</a> · <a href="gripper-front.mp4?run=20261110-192004-formal-reacquire-fix">夹爪正视</a></details>
+</main><script>
 const full=document.querySelector('#panorama');
-const cam=document.querySelector('#processed');
-const play=document.querySelector('#play');
-const seek=document.querySelector('#seek');
-const clock=document.querySelector('#clock');
-const status=document.querySelector('#status');
-const rate=document.querySelector('#rate');
-rate.addEventListener('change',()=>{full.playbackRate=cam.playbackRate=Number(rate.value);});
-const start=6.16;
+const videos=Array.from(document.querySelectorAll('video'));
+const play=document.querySelector('#play'),seek=document.querySelector('#seek'),clock=document.querySelector('#clock'),status=document.querySelector('#status'),rate=document.querySelector('#rate');
+const start=4.28,hasGripper=true;
+let angle=matchMedia('(max-width:760px)').matches?'side':'all';
+function activeVideos(){return videos.filter(video=>video.dataset.group!=='gripper'||angle==='all'||video.id===angle);}
 function updateClock(){seek.value=full.currentTime;clock.textContent=(start+full.currentTime).toFixed(2)+' s';}
-function sync(){if(cam.readyState>0)cam.currentTime=full.currentTime;updateClock();}
+function sync(force=false){for(const video of activeVideos()){if(video===full)continue;if(video.readyState>0&&(force||Math.abs(video.currentTime-full.currentTime)>.12))video.currentTime=full.currentTime;}updateClock();}
+function pauseAll(){for(const video of videos)video.pause();play.textContent='播放';}
+function setAngle(value){angle=value;for(const card of document.querySelectorAll('[data-group="gripper"].view-card'))card.hidden=angle!=='all'&&card.dataset.view!==angle;document.querySelector('#near-views').classList.toggle('single',angle!=='all');for(const button of document.querySelectorAll('[data-angle]'))button.setAttribute('aria-pressed',String(button.dataset.angle===angle));for(const video of videos){video.playbackRate=Number(rate.value);if(!activeVideos().includes(video))video.pause();}sync(true);if(!full.paused)Promise.all(activeVideos().map(video=>video.play())).catch(()=>{pauseAll();status.textContent='视频尚未就绪，请再点播放。';});}
+document.querySelector('#gripper-section').hidden=!hasGripper;
+for(const button of document.querySelectorAll('[data-angle]'))button.addEventListener('click',()=>setAngle(button.dataset.angle));
+rate.addEventListener('change',()=>{for(const video of videos)video.playbackRate=Number(rate.value);});
 full.addEventListener('loadedmetadata',()=>{seek.max=full.duration;updateClock();});
-cam.addEventListener('loadedmetadata',sync);
-full.addEventListener('timeupdate',()=>{updateClock();if(cam.readyState>0&&Math.abs(cam.currentTime-full.currentTime)>.12)cam.currentTime=full.currentTime;});
-full.addEventListener('ended',()=>{cam.pause();play.textContent='重新播放';});
-seek.addEventListener('input',()=>{full.currentTime=Number(seek.value);sync();});
-play.addEventListener('click',async()=>{
-  status.textContent='';
-  if(!full.paused){full.pause();cam.pause();play.textContent='播放';return;}
-  if(full.ended)full.currentTime=0;
-  sync();
-  try{await Promise.all([full.play(),cam.play()]);play.textContent='暂停';}
-  catch(error){full.pause();cam.pause();play.textContent='播放';status.textContent='未能播放，请刷新后重试，或在下方单独打开视频。';}
-});
-for(const video of [full,cam])video.addEventListener('error',()=>{status.textContent='视频加载失败，请刷新页面或单独打开视频。';});
-</script>
-</body></html>
+for(const video of videos)if(video!==full)video.addEventListener('loadedmetadata',()=>sync(true));
+full.addEventListener('timeupdate',()=>sync());
+full.addEventListener('ended',()=>{pauseAll();play.textContent='重新播放';});
+seek.addEventListener('input',()=>{full.currentTime=Number(seek.value);sync(true);});
+play.addEventListener('click',async()=>{status.textContent='';if(!full.paused){pauseAll();return;}if(full.ended)full.currentTime=0;sync(true);play.disabled=true;try{await Promise.all(activeVideos().map(video=>video.play()));play.textContent='暂停';}catch(error){pauseAll();status.textContent='未能播放，请刷新后重试，或在下方单独打开视频。';}finally{play.disabled=false;}});
+for(const video of videos)video.addEventListener('error',()=>{status.textContent='视频加载失败，请刷新页面或单独打开视频。';});
+setAngle(angle);
+</script></body></html>
