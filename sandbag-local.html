@@ -1,0 +1,15 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>沙包局部夹持预览</title>
+<style>body{margin:0;background:#101925;color:#eef3f8;font:16px "Microsoft YaHei",system-ui;line-height:1.8}main{max-width:1050px;margin:auto;padding:22px}h1{font-size:25px;margin:0 0 12px}h2{font-size:20px;margin-top:30px}p{color:#bfccdb}video,img{display:block;width:100%;border-radius:8px;background:#000}button{font:inherit;background:#2a4058;color:#fff;border:0;border-radius:5px;padding:7px 12px;margin:8px 5px 0 0;cursor:pointer}.status{color:#ffcb8a}details{margin-top:20px}table{border-collapse:collapse;width:100%}td,th{padding:9px;border-bottom:1px solid #354354;text-align:left}</style>
+<main data-run="20261114-192052-dense-cloth-local24-P335"><h1>沙包局部夹持预览</h1>
+<p>夹指从中间局部捏入，周围保留鼓起的形态。5.11秒时，夹持面中心间距为24.0毫米，同一方向的整包外缘宽度为29.8毫米。</p>
+<p class="status">当前形态候选已生成。保持阶段仍有侧向滑移，较深夹持组随后脱出，稳定夹持验证尚未通过。</p>
+<video id="mainVideo" controls playsinline muted preload="metadata" src="sandbag-local-close.mp4?run=20261114-192052-dense-cloth-local24-P335"></video>
+<button onclick="seek(1)">松置</button><button onclick="seek(2.7)">局部夹紧</button><button onclick="seek(4)">抬升保持</button><button onclick="seek(5.1)">24毫米夹口与滑移</button><button onclick="seek(6)">脱出</button><button onclick="mainVideo.playbackRate=.5">半速</button><button onclick="mainVideo.playbackRate=1">原速</button>
+<p>展示使用完整CAD夹爪，目标指令P335、闭合时长1秒。时间轴中保留了脱出过程。</p>
+<img src="sandbag-local-preview.png?run=20261114-192052-dense-cloth-local24-P335" alt="松置、局部夹紧、抬升和24毫米夹口的仿真画面">
+<details><summary>查看夹爪总成全景</summary><video controls playsinline muted preload="none" src="sandbag-local-overview.mp4?run=20261114-192052-dense-cloth-local24-P335"></video></details>
+<details><summary>查看较轻夹持组</summary><p>P320组夹口约26毫米，2.19秒保持期间，沙包相对夹爪竖直位置变化约2.8毫米，侧向位移约7.7毫米。</p><video controls playsinline muted preload="none" src="sandbag-local-light.mp4?run=20261114-192052-dense-cloth-local24-P335"></video></details>
+<h2>本轮计算结果</h2><table><thead><tr><th>项目</th><th>较轻夹持P320</th><th>较深夹持P335</th></tr></thead><tbody><tr><td>最高抬升</td><td>29.7毫米</td><td>31.8毫米</td></tr><tr><td>最小单元体积比</td><td>0.954</td><td>0.867</td></tr><tr><td>最大夹爪接触穿透</td><td>0.166毫米</td><td>0.738毫米</td></tr><tr><td>保持表现</td><td>出现滑移</td><td>滑移后脱出</td></tr></tbody></table>
+<p>模型采用27个填充节点与26个独立布面节点。填充体包含摩擦塑性、压密硬化和剪胀，袋布承担抗拉约束，袋内允许分离与有限滑动。材料系数依据“填充较密、手感较硬”作候选估计，仍需实物力与变形数据校准。</p>
+<p>本轮采用0.25毫秒步长。每组13.6秒模拟动作分别耗时约366秒与317秒，包含并行运行和画面录制。计算速度还需要优化。</p>
+</main><script>function seek(t){mainVideo.currentTime=t;mainVideo.pause()}</script></html>
