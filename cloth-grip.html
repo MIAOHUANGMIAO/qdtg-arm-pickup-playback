@@ -1,0 +1,15 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>布制沙包夹持修正版</title>
+<style>body{margin:0;background:#101925;color:#eef3f8;font:16px "Microsoft YaHei",system-ui;line-height:1.8}main{max-width:1050px;margin:auto;padding:22px}h1{font-size:25px;margin:0 0 12px}h2{font-size:20px;margin-top:28px}p{color:#bdccdd}video,img{display:block;width:100%;border-radius:8px;background:#000}button{font:inherit;background:#2a4058;color:white;border:0;border-radius:5px;padding:7px 12px;margin:8px 5px 0 0;cursor:pointer}.result{color:#91ddc6}details{margin-top:20px}table{border-collapse:collapse;width:100%}td,th{padding:9px;border-bottom:1px solid #354354;text-align:left}</style>
+<main data-run="20261114-204246-cloth-full-history-hold30-P335"><h1>布制沙包夹持修正版</h1>
+<p>按适度填充、可局部捏扁的布袋建模。完整CAD夹爪从中部夹紧，抬升并保持30秒，随后放回、松爪。画面与数值均为仿真结果。</p>
+<p class="result">30秒保持与释放通过。侧向变化范围为0.065、0.052毫米，竖直相对变化范围为0.251毫米。包体未脱出，网格未翻转，松爪后夹指接触力归零。</p>
+<video id="v" controls playsinline muted preload="metadata" src="cloth-grip-close.mp4?run=20261114-204246-cloth-full-history-hold30-P335"></video>
+<button onclick="seek(.8)">松置</button><button onclick="seek(2.89)">约24毫米局部夹口</button><button onclick="seek(4)">开始保持</button><button onclick="seek(33.8)">30秒保持末段</button><button onclick="seek(36.8)">松爪</button><button onclick="v.playbackRate=2">2倍速</button><button onclick="v.playbackRate=1">原速</button>
+<img src="cloth-grip-preview.png?run=20261114-204246-cloth-full-history-hold30-P335" alt="松置、局部夹持、30秒保持与释放的实际仿真画面">
+<details><summary>查看夹爪总成全景</summary><video controls playsinline muted preload="none" src="cloth-grip-overview.mp4?run=20261114-204246-cloth-full-history-hold30-P335"></video></details>
+<h2>验证结果</h2><table><thead><tr><th>项目</th><th>局部夹持P335</th><th>强夹短测P700</th></tr></thead><tbody><tr><td>保持时长</td><td>30.0005秒</td><td>2.19秒</td></tr><tr><td>侧向最大变化范围</td><td>0.065毫米</td><td>0.092毫米</td></tr><tr><td>竖直相对变化范围</td><td>0.251毫米</td><td>0.132毫米</td></tr><tr><td>最大接触穿透</td><td>0.091毫米</td><td>0.169毫米</td></tr><tr><td>保持期间脱出</td><td>无</td><td>无</td></tr><tr><td>物理步长</td><td>0.25毫秒</td><td>0.125毫秒</td></tr></tbody></table>
+<p>本版降低了填充阻力，并保留少量袋内余量。持续接触使用一致的受力点，接触面承担有限的切向摩擦与抗扭摩擦，接触力迭代沿用上一时刻的解作为初值。</p>
+<p>局部夹口是两夹持面中心的间距。2.89秒时夹口约24.1毫米，同方向包体整体外缘约25.7毫米，其余方向仍可鼓起。保持期间允许材料继续压密，夹口会有所缩小。</p>
+<p>本次使用名义30毫米、代表质量20克，材料参数依据实物描述作工程估计，力与变形关系仍待实测校准。验证范围为独立夹爪保持与释放。计算速度仍偏慢，41.41秒动作实际耗时约16.7分钟，包含录制及并行测试。</p>
+<details><summary>建模依据</summary><p>填充体与袋布分开建模，参考<a href="https://www.newcastle.edu.au/__data/assets/pdf_file/0005/22685/12_Numerical-analysis-of-soilbags-under-compression-and-cyclic-shear.pdf">沙袋压缩与循环剪切有限元研究</a>。有限接触面的抗扭作用参考<a href="https://www.cs.columbia.edu/~cmatei/Soft_finger_model-HAPTICS07.pdf">软接触摩擦力与摩擦力矩模型</a>。模型参数采用本项目候选值。</p></details>
+</main><script>function seek(t){v.currentTime=t;v.pause()}</script></html>
