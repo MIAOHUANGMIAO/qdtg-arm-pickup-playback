@@ -7,7 +7,7 @@
 <button onclick="seek(.8)">松置</button><button onclick="seek(2.89)">约24毫米局部夹口</button><button onclick="seek(4)">开始保持</button><button onclick="seek(33.8)">30秒保持末段</button><button onclick="seek(36.8)">松爪</button><button onclick="v.playbackRate=2">2倍速</button><button onclick="v.playbackRate=1">原速</button>
 <img src="cloth-grip-preview.png?run=20261114-204246-cloth-full-history-hold30-P335" alt="松置、局部夹持、30秒保持与释放的实际仿真画面">
 <details><summary>查看夹爪总成全景</summary><video controls playsinline muted preload="none" src="cloth-grip-overview.mp4?run=20261114-204246-cloth-full-history-hold30-P335"></video></details>
-<h2>验证结果</h2><table><thead><tr><th>项目</th><th>局部夹持P335</th><th>强夹短测P700</th></tr></thead><tbody><tr><td>保持时长</td><td>30.0005秒</td><td>2.19秒</td></tr><tr><td>侧向最大变化范围</td><td>0.065毫米</td><td>0.092毫米</td></tr><tr><td>竖直相对变化范围</td><td>0.251毫米</td><td>0.132毫米</td></tr><tr><td>最大接触穿透</td><td>0.091毫米</td><td>0.169毫米</td></tr><tr><td>保持期间脱出</td><td>无</td><td>无</td></tr><tr><td>物理步长</td><td>0.25毫秒</td><td>0.125毫秒</td></tr></tbody></table>
+<h2>验证结果</h2><table><thead><tr><th>项目</th><th>局部夹持P335</th><th>强夹短测P700</th></tr></thead><tbody><tr><td>保持时长</td><td>30.0005秒</td><td>2.19秒</td></tr><tr><td>侧向最大变化范围</td><td>0.065毫米</td><td>0.092毫米</td></tr><tr><td>竖直相对变化范围</td><td>0.251毫米</td><td>0.132毫米</td></tr><tr><td>最大记录接触穿透</td><td>0.091毫米</td><td>0.169毫米</td></tr><tr><td>保持期间脱出</td><td>无</td><td>无</td></tr><tr><td>物理步长</td><td>0.25毫秒</td><td>0.125毫秒</td></tr></tbody></table>
 <p>本版降低了填充阻力，并保留少量袋内余量。持续接触使用一致的受力点，接触面承担有限的切向摩擦与抗扭摩擦，接触力迭代沿用上一时刻的解作为初值。</p>
 <p>局部夹口是两夹持面中心的间距。2.89秒时夹口约24.1毫米，同方向包体整体外缘约25.7毫米，其余方向仍可鼓起。保持期间允许材料继续压密，夹口会有所缩小。</p>
 <p>本次使用名义30毫米、代表质量20克，材料参数依据实物描述作工程估计，力与变形关系仍待实测校准。验证范围为独立夹爪保持与释放。计算速度仍偏慢，41.41秒动作实际耗时约16.7分钟，包含录制及并行测试。</p>
